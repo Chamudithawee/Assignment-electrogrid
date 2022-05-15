@@ -39,25 +39,28 @@ public class Powercut {
 			}
 
 			// create a prepared statement
-			String query = " insert into powercutschedule (`id`,`name`,`group`,`dayStartTime`,`dayEndTime`,`nightStartTime`,`nightEndTime`)"
-							+ "values (?,?,?,?,?,?,?)";
+			String query = " insert into powercutschedule (`id`,`powercutCode`,`name`,`group`,`dayStartTime`,`dayEndTime`,`nightStartTime`,`nightEndTime`)"
+							+ "values (?,?,?,?,?,?,?,?)";
 			PreparedStatement preparedStmt;
 			try {
 				preparedStmt = con.prepareStatement(query);
 
-				preparedStmt.setString(1, id);
-				preparedStmt.setString(2, name);
-				preparedStmt.setString(3, group);
-				preparedStmt.setString(4, dayStartTime);
-				preparedStmt.setString(5, dayEndTime);
-				preparedStmt.setString(6, nightStartTime);
-				preparedStmt.setString(7, nightEndTime);
+				preparedStmt.setInt(1, 0);
+				preparedStmt.setString(2, id);
+				preparedStmt.setString(3, name);
+				preparedStmt.setString(4, group);
+				preparedStmt.setString(5, dayStartTime);
+				preparedStmt.setString(6, dayEndTime);
+				preparedStmt.setString(7, nightStartTime);
+				preparedStmt.setString(8, nightEndTime);
 
 				preparedStmt.execute();
 				con.close();
-				output = "added successfully";
+				
+				String newRecord = readPowercuts();
+				output = "{\"status\":\"successs\", \"data\": \" "+newRecord+"\"}";
 			} catch (SQLException e) {
-				output = "Error while adding";
+				output = "{\"status\":\"error\", \"data\": \"Error while inserting the item.\"}";
 				System.err.println(e.getMessage());
 			}
 
@@ -91,7 +94,7 @@ public class Powercut {
 					String nightEndTime = rs.getString("nightEndTime");
 
 					// Add into the html table
-					output += "<tr><td><input id='hidIDUpdate' name='hidIDUpdate' type='hidden' value='" + id + "'>" + powercutCode + "</td>";
+					output += "<tr><td>" + powercutCode + "</td>";
 					output += "<td>" + name + "</td>";
 					output += "<td>" + group + "</td>";
 					output += "<td>" + dayStartTime + "</td>";
@@ -100,14 +103,10 @@ public class Powercut {
 					output += "<td>" + nightEndTime + "</td>";
 					
 					// buttons
-					 output += "<td><input name='btnUpdate'"
-					 		+ "type='button' value='Update'"
-					 		+ "class=' btnUpdate btn btn-secondary'></td>"
-					 		+ " <td><form method='post' action='items.jsp'>"
-					 		+ "<input name='btnRemove' type='submit'"
-					 		+ "value='Remove' class='btn btn-danger'>"
-					 		+ "<input name='hidIDDelete' id='hidIDDelete' type='hidden'"
-					 		+ "value='" + id + "'>" + "</form></td></tr>";
+					output += "<td><input name='btnUpdate' type='button' value='Update' "
+							+ "class='btnUpdate btn btn-secondary' data-powercutid='" + id + "'></td>"
+							+ "<td><input name='btnRemove' type='button' value='Remove' "
+							+ "class='btnRemove btn btn-danger' data-powercutid='" + id + "'></td></tr>";
 				}
 				con.close();
 
@@ -122,7 +121,7 @@ public class Powercut {
 		}
 		
 		//update method
-		public String updatePowercut(String ID,String name, String group, String dayStartTime, String dayEndTime, String nightStartTime, String nightEndTime)
+		public String updatePowercut(String id, String powercutCode,String name, String group, String dayStartTime, String dayEndTime, String nightStartTime, String nightEndTime)
 
 		{
 			String output = "";
@@ -133,26 +132,30 @@ public class Powercut {
 				}
 				// create a prepared statement
 
-				String query = "UPDATE powercutschedule SET name=?, group=?, dayStartTime=?,"
+				String query = "UPDATE powercutschedule SET powercutCode=? name=?, group=?, dayStartTime=?,"
 						+ " dayEndTime=?, nightStartTime=?,"
 						+ " nightEndTime=? WHERE id=?";
 
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 				// binding values
-				preparedStmt.setString(1, name);
-				preparedStmt.setString(2, group);
-				preparedStmt.setString(3, dayStartTime);
-				preparedStmt.setString(4, dayEndTime);
-				preparedStmt.setString(5, nightStartTime);
-				preparedStmt.setString(6, nightEndTime);
+				preparedStmt.setString(1, powercutCode);
+				preparedStmt.setString(2, name);
+				preparedStmt.setString(3, group);
+				preparedStmt.setString(4, dayStartTime);
+				preparedStmt.setString(5, dayEndTime);
+				preparedStmt.setString(6, nightStartTime);
+				preparedStmt.setString(7, nightEndTime);
 
-				preparedStmt.setString(7,ID);
+				preparedStmt.setString(8,id);
 				// execute the statement
 				preparedStmt.execute();
 				con.close();
-				output = "Updated successfully";
+				
+				String newRecord = readPowercuts();
+				output = "{\"status\":\"successs\", \"data\": \" "+newRecord+"\"}";
+				
 			} catch (Exception e) {
-				output = "Error while updating the powercut Record.";
+				output = "{\"status\":\"error\", \"data\": \"Error while Updating the item.\"}";
 				System.err.println(e.getMessage());
 			}
 			return output;
@@ -170,13 +173,16 @@ public class Powercut {
 				String query = "delete from powercutschedule where id=?";
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 				// binding values
-				preparedStmt.setString(1,id);
+				preparedStmt.setInt(1, Integer.parseInt(id));
 				// execute the statement
 				preparedStmt.execute();
 				con.close();
-				output = "Deleted successfully";
+				
+				String newRecord = readPowercuts();
+				output = "{\"status\":\"successs\", \"data\": \" "+newRecord+"\"}";
+				
 			} catch (Exception e) {
-				output = "Error while deleting the Powercut Record.";
+				output = "{\"status\":\"error\", \"data\": \"Error while Updating the item.\"}";
 				System.err.println(e.getMessage());
 			}
 			return output;

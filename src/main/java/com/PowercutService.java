@@ -53,13 +53,14 @@ public class PowercutService {
 		JsonObject powercutObject = new JsonParser().parse(powercutData).getAsJsonObject();
 		// Read the values from the JSON object
 		String id = powercutObject.get("id").getAsString();
+		String powercutCode = powercutObject.get("powercutCode").getAsString();
 		String name = powercutObject.get("name").getAsString();
 		String group = powercutObject.get("group").getAsString();
 		String dayStartTime = powercutObject.get("dayStartTime").getAsString();
 		String dayEndTime = powercutObject.get("dayEndTime").getAsString();
 		String nightStartTime = powercutObject.get("nightStartTime").getAsString();
 		String nightEndTime = powercutObject.get("nightEndTime").getAsString();
-		String output = powercutObj.updatePowercut( id,name, group, dayStartTime, dayEndTime, nightStartTime,
+		String output = powercutObj.updatePowercut( id, powercutCode,name, group, dayStartTime, dayEndTime, nightStartTime,
 				                                   nightEndTime );
 		return output;
 	}

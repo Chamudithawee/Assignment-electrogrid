@@ -19,7 +19,7 @@
 			<h1 class="text-center">Add PowerCut Record</h1>
 			<br>
 			
-			<form id="formPowercut" name="formPowercut" method="post" action="powercutSchedule.jsp">
+			<form id="formPowercut" name="formPowercut">
 			
 			  <div class="form-group">
 			    <label for="powercutCode">Code:</label>
@@ -62,6 +62,18 @@
 			  <button type="button" id="btnSave" name="btnSave" class="btn btn-default">Add</button>
 			  <input type="hidden" id="hidIDSave" name="hidIDSave" value="">
 			</form>
+			
+			<br>
+			<hr>
+			<br>
+			
+			<div id="divPowercutGrid">
+			 	<%
+			 		Powercut powercutObj = new Powercut();
+			 		out.print(powercutObj.readPowercuts());
+			 	%>
+			</div>
+			
 			
 		</div>
 	</div>
