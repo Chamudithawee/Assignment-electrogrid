@@ -68,7 +68,7 @@
 			<hr>
 			<br>
 			
-			<div id="divPowercutGrid">
+			<div id="divItemsGrid">
 			 	<%
 			 		Powercut powercutObj = new Powercut();
 			 		out.print(powercutObj.readPowercuts());

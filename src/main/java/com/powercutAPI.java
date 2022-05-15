@@ -14,6 +14,8 @@ import java.util.Scanner;
 @WebServlet("/powercutAPI")
 public class powercutAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Powercut powercutObj = new Powercut();
        
     
     public powercutAPI() {

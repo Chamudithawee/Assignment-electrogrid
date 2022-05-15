@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 public class Powercut {
 	
 	public Connection connect() {
@@ -29,6 +30,61 @@ public class Powercut {
 
 		return con;
 	}
+	
+	
+	//retrieve method
+			public String readPowercuts() {
+				String output = "";
+				try {
+					Connection con = connect();
+					if (con == null) {
+						return "Error while connecting to the database for reading Customers.";
+					}
+					// Prepare the html table to be displayed
+					output = "<table border='1'><tr><th>Code</th><th>Name</th><th>Group</th><th>day Start Time</th>"
+							+ "<th>day End Time</th><th>night Start Time</th><th>night End Time</th><th>Update</th><th>Remove</th></tr>";
+
+					String query = "select * from powercutschedule";
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery(query);
+					// iterate through the rows in the result set
+					while (rs.next()) {
+						String id = Integer.toString(rs.getInt("id"));
+						String powercutCode = rs.getString("powercutCode");
+						String name = rs.getString("name");
+						String group = rs.getString("group");
+						String dayStartTime = rs.getString("dayStartTime");
+						String dayEndTime = rs.getString("dayEndTime");
+						String nightStartTime = rs.getString("nightStartTime");
+						String nightEndTime = rs.getString("nightEndTime");
+
+						// Add into the html table
+						output += "<tr><td>" + powercutCode + "</td>";
+						output += "<td>" + name + "</td>";
+						output += "<td>" + group + "</td>";
+						output += "<td>" + dayStartTime + "</td>";
+						output += "<td>" + dayEndTime + "</td>";
+						output += "<td>" + nightStartTime + "</td>";
+						output += "<td>" + nightEndTime + "</td>";
+						
+						// buttons
+						output += "<td><input name='btnUpdate' type='button' value='Update' "
+								+ "class='btnUpdate btn btn-secondary' data-powercutid='" + id + "'></td>"
+								+ "<td><input name='btnRemove' type='button' value='Remove' "
+								+ "class='btnRemove btn btn-danger' data-powercutid='" + id + "'></td></tr>";
+					}
+					con.close();
+
+					output += "</table>";
+				}
+
+				catch (Exception e) {
+					output = "Error while reading the powercut records.";
+					System.err.println(e.getMessage());
+				}
+				return output;
+			}
+	
 	
 	//create method
 		public String insertPowercut(String id, String name, String group, String dayStartTime, String dayEndTime, String nightStartTime, String nightEndTime) {
@@ -67,58 +123,7 @@ public class Powercut {
 			return output;
 		}
 		
-		//retrieve method
-		public String readPowercuts() {
-			String output = "";
-			try {
-				Connection con = connect();
-				if (con == null) {
-					return "Error while connecting to the database for reading Customers.";
-				}
-				// Prepare the html table to be displayed
-				output = "<table border='1'><tr><th>Code</th><th>Name</th><th>Group</th><th>day Start Time</th>"
-						+ "<th>day End Time</th><th>night Start Time</th><th>night End Time</th><th>Update</th><th>Remove</th></tr>";
-
-				String query = "select * from powercutschedule";
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery(query);
-				// iterate through the rows in the result set
-				while (rs.next()) {
-					String id = Integer.toString(rs.getInt("id"));
-					String powercutCode = rs.getString("powercutCode");
-					String name = rs.getString("name");
-					String group = rs.getString("group");
-					String dayStartTime = rs.getString("dayStartTime");
-					String dayEndTime = rs.getString("dayEndTime");
-					String nightStartTime = rs.getString("nightStartTime");
-					String nightEndTime = rs.getString("nightEndTime");
-
-					// Add into the html table
-					output += "<tr><td>" + powercutCode + "</td>";
-					output += "<td>" + name + "</td>";
-					output += "<td>" + group + "</td>";
-					output += "<td>" + dayStartTime + "</td>";
-					output += "<td>" + dayEndTime + "</td>";
-					output += "<td>" + nightStartTime + "</td>";
-					output += "<td>" + nightEndTime + "</td>";
-					
-					// buttons
-					output += "<td><input name='btnUpdate' type='button' value='Update' "
-							+ "class='btnUpdate btn btn-secondary' data-powercutid='" + id + "'></td>"
-							+ "<td><input name='btnRemove' type='button' value='Remove' "
-							+ "class='btnRemove btn btn-danger' data-powercutid='" + id + "'></td></tr>";
-				}
-				con.close();
-
-				output += "</table>";
-			}
-
-			catch (Exception e) {
-				output = "Error while reading the powercut records.";
-				System.err.println(e.getMessage());
-			}
-			return output;
-		}
+		
 		
 		//update method
 		public String updatePowercut(String id, String powercutCode,String name, String group, String dayStartTime, String dayEndTime, String nightStartTime, String nightEndTime)
