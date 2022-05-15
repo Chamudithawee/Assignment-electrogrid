@@ -17,8 +17,6 @@ import org.jsoup.parser.Parser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import model.Powercut;
-
 @Path("/powercut")
 public class PowercutService {
 	
