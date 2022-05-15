@@ -77,12 +77,13 @@ public class powercutAPI extends HttpServlet {
 		Map paras = getParasMap(request);
 		
 		String output = powercutObj.updatePowercut(paras.get("hidIDSave").toString(),
-							paras.get("name"),
-				            paras.get("group"),
-				            paras.get("dayStartTime"),
-				            paras.get("dayEndTime"),
-				            paras.get("nightStartTime"),
-				            paras.get("nightEndTime"));
+							paras.get("powercutCode").toString(),
+							paras.get("name").toString(),
+				            paras.get("group").toString(),
+				            paras.get("dayStartTime").toString(),
+				            paras.get("dayEndTime").toString(),
+				            paras.get("nightStartTime").toString(),
+				            paras.get("nightEndTime").toString());
 					
 		
 		response.getWriter().write(output);

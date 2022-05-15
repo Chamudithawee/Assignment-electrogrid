@@ -138,15 +138,16 @@ public class Powercut {
 
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 				// binding values
-				preparedStmt.setString(1, powercutCode);
-				preparedStmt.setString(2, name);
-				preparedStmt.setString(3, group);
-				preparedStmt.setString(4, dayStartTime);
-				preparedStmt.setString(5, dayEndTime);
-				preparedStmt.setString(6, nightStartTime);
-				preparedStmt.setString(7, nightEndTime);
+				preparedStmt.setString(1,id);
+				preparedStmt.setString(2, powercutCode);
+				preparedStmt.setString(3, name);
+				preparedStmt.setString(4, group);
+				preparedStmt.setString(5, dayStartTime);
+				preparedStmt.setString(6, dayEndTime);
+				preparedStmt.setString(7, nightStartTime);
+				preparedStmt.setString(8, nightEndTime);
 
-				preparedStmt.setString(8,id);
+				
 				// execute the statement
 				preparedStmt.execute();
 				con.close();
