@@ -28,7 +28,19 @@ $(document).on("click", "#btnSave", function(event)
  	}
  	
  	// If valid------------------------
- 	$("#formItem").submit();
+ 	var type = ($("#hidIDsave").val() == "") ? "POST" : "PUT";
+ 	
+ 	$.ajax(
+	{
+		url : "powercutAPI",
+		type : type,
+		data : $("#formPowercut").serialize(),
+		dataType : "text",
+		complete : function(response, status)
+		{
+			onPowercutComplete(response.responseText, status);
+		}
+	});
 
 });
 
