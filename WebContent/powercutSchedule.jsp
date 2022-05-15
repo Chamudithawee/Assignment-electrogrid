@@ -1,4 +1,4 @@
-<%@page import="com.Powercut"%>
+<%@ page import="com.Powercut" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>PowerCut Schedule</title>
-<link rel="stylesheet" href="bootstrap.min.css">
+<link rel="stylesheet" href="Views/bootstrap.min.css">
 <script src="Components/jquery-3.6.0.min.js"></script>
 <script src="Components/powercutSchedule.js"></script>
 
@@ -67,13 +67,13 @@
 			<br>
 			<hr>
 			<br>
-			
 			<div id="divItemsGrid">
 			 	<%
 			 		Powercut powercutObj = new Powercut();
 			 		out.print(powercutObj.readPowercuts());
 			 	%>
 			</div>
+			
 			
 			
 		</div>
