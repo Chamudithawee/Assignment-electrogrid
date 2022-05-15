@@ -73,15 +73,16 @@ public class Powercut {
 					return "Error while connecting to the database for reading Customers.";
 				}
 				// Prepare the html table to be displayed
-				output = "<table border='1'><tr><th>ID</th><th>Name</th><th>Group</th><th>day Start Time</th>"
-						+ "<th>day End Time</th><th>night Start Time</th><th>night End Time</th>";
+				output = "<table border='1'><tr><th>Code</th><th>Name</th><th>Group</th><th>day Start Time</th>"
+						+ "<th>day End Time</th><th>night Start Time</th><th>night End Time</th><th>Update</th><th>Remove</th></tr>";
 
 				String query = "select * from powercutschedule";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
 				// iterate through the rows in the result set
 				while (rs.next()) {
-					String id = rs.getString("id");
+					String id = Integer.toString(rs.getInt("id"));
+					String powercutCode = rs.getString("powercutCode");
 					String name = rs.getString("name");
 					String group = rs.getString("group");
 					String dayStartTime = rs.getString("dayStartTime");
@@ -90,13 +91,23 @@ public class Powercut {
 					String nightEndTime = rs.getString("nightEndTime");
 
 					// Add into the html table
-					output += "<tr><td>" + id + "</td>";
+					output += "<tr><td><input id='hidIDUpdate' name='hidIDUpdate' type='hidden' value='" + id + "'>" + powercutCode + "</td>";
 					output += "<td>" + name + "</td>";
 					output += "<td>" + group + "</td>";
 					output += "<td>" + dayStartTime + "</td>";
 					output += "<td>" + dayEndTime + "</td>";
 					output += "<td>" + nightStartTime + "</td>";
 					output += "<td>" + nightEndTime + "</td>";
+					
+					// buttons
+					 output += "<td><input name='btnUpdate'"
+					 		+ "type='button' value='Update'"
+					 		+ "class=' btnUpdate btn btn-secondary'></td>"
+					 		+ " <td><form method='post' action='items.jsp'>"
+					 		+ "<input name='btnRemove' type='submit'"
+					 		+ "value='Remove' class='btn btn-danger'>"
+					 		+ "<input name='hidIDDelete' id='hidIDDelete' type='hidden'"
+					 		+ "value='" + id + "'>" + "</form></td></tr>";
 				}
 				con.close();
 
