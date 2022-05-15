@@ -1,3 +1,4 @@
+<%@ page import="com.Powercut" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -66,13 +67,13 @@
 			<br>
 			<hr>
 			<br>
-			
-			<div id="divPowercutGrid">
+			<div id="divItemsGrid">
 			 	<%
 			 		Powercut powercutObj = new Powercut();
 			 		out.print(powercutObj.readPowercuts());
 			 	%>
 			</div>
+			
 			
 			
 		</div>

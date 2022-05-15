@@ -11,12 +11,11 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-import model.Powercut;
-
-
 @WebServlet("/powercutAPI")
 public class powercutAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Powercut powercutObj = new Powercut();
        
     
     public powercutAPI() {
